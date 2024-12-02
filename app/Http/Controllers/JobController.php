@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    public function index(Job $job) {
-        $jobs = Job::with('employer')->latest()->paginate(3);    // implement eager loading   paginate = display in pages
+    public function index()
+    {
+        // Fetch jobs with the employer relationship and paginate results
+        $jobs = Job::with('employer')->latest()->paginate(3);
 
-        return view("jobs.index", [
-            'jobs' => $jobs
-        ]);
+        // Pass the jobs data to the view
+        return view('jobs.index', compact('jobs')); // 'jobs' should be passed correctly to the view
     }
 
     public function create() {
@@ -67,5 +68,7 @@ class JobController extends Controller
 
         return redirect('/jobs');
     }
+
+
 
 }
