@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Employer::class);
+            // Create foreign key column for Employer with cascade delete
+            $table->foreignIdFor(\App\Models\Employer::class)->constrained()->onDelete('cascade');
+            // Salary as a decimal type (assuming you're dealing with money)
+            $table->decimal('salary');
+            // Title as a string
             $table->string('title');
-            $table->string('salary');
+            // Timestamps for created_at and updated_at
             $table->timestamps();
         });
     }
